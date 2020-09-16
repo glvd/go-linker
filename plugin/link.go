@@ -11,11 +11,11 @@ type bustlinker struct {
 }
 
 func (b *bustlinker) Name() string {
-	panic("implement me")
+	return "linker"
 }
 
 func (b *bustlinker) Version() string {
-	panic("implement me")
+	return "0.0.1"
 }
 
 func (b *bustlinker) Init(env *plugin.Environment) error {
