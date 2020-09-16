@@ -1,7 +1,7 @@
 package plugin
 
 import (
-	linker "github.com/glvd/go-linker"
+	"github.com/glvd/go-linker"
 	"github.com/ipfs/go-ipfs/core"
 	"github.com/ipfs/go-ipfs/plugin"
 )

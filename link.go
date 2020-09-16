@@ -5,10 +5,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/glvd/go-linker/config"
 	"sync"
 	"time"
-
-	"github.com/glvd/go-bustlinker/config"
 
 	"github.com/ipfs/go-ipfs/core"
 	"github.com/ipfs/go-ipfs/core/coreapi"

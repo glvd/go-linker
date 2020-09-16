@@ -3,7 +3,7 @@ package linker
 import (
 	"sync"
 
-	"github.com/glvd/go-bustlinker/config"
+	"github.com/glvd/go-linker/config"
 
 	"github.com/ipfs/go-ipfs/core"
 	"github.com/libp2p/go-libp2p-core/peer"
