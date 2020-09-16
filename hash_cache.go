@@ -1,10 +1,12 @@
-package plugin_bustlinker
+package linker
 
 import (
-	"github.com/glvd/plugin-bustlinker/config"
+	"sync"
+
+	"github.com/glvd/go-bustlinker/config"
+
 	"github.com/ipfs/go-ipfs/core"
 	"github.com/libp2p/go-libp2p-core/peer"
-	"sync"
 )
 
 const hashName = "hash"

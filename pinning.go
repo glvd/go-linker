@@ -1,12 +1,13 @@
-package plugin_bustlinker
+package linker
 
 import (
 	"context"
+	"sync"
+
 	core "github.com/ipfs/go-ipfs/core"
 	coreapi "github.com/ipfs/go-ipfs/core/coreapi"
 	"github.com/ipfs/interface-go-ipfs-core/path"
 	"go.uber.org/atomic"
-	"sync"
 )
 
 type Pinning interface {

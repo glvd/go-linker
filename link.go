@@ -1,11 +1,15 @@
-package plugin_bustlinker
+package linker
 
 import (
 	"bufio"
 	"context"
 	"errors"
 	"fmt"
-	"github.com/glvd/plugin-bustlinker/config"
+	"sync"
+	"time"
+
+	"github.com/glvd/go-bustlinker/config"
+
 	"github.com/ipfs/go-ipfs/core"
 	"github.com/ipfs/go-ipfs/core/coreapi"
 	iface "github.com/ipfs/interface-go-ipfs-core"
@@ -15,8 +19,6 @@ import (
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/libp2p/go-libp2p-core/protocol"
 	"github.com/multiformats/go-multiaddr"
-	"sync"
-	"time"
 )
 
 const Version = "0.0.1"
@@ -32,7 +34,10 @@ var protocols = []string{
 var NewLine = []byte{'\n'}
 
 type Linker interface {
+	SetNode(node *core.IpfsNode) Linker
 	Start() error
+	//plugin.Plugin
+	//plugin.PluginDaemonInternal
 }
 
 type link struct {
@@ -45,6 +50,12 @@ type link struct {
 	addresses *PeerCache
 	hashes    *HashCache
 	pinning   Pinning
+	repo      string
+}
+
+func (l *link) SetNode(node *core.IpfsNode) Linker {
+	l.node = node
+	return l
 }
 
 func (l *link) Syncing() {
@@ -133,6 +144,11 @@ func (l *link) registerHandle() {
 
 func (l *link) Start() error {
 	fmt.Println("Link start")
+
+	l.pinning = newPinning(l.node)
+	l.addresses = NewAddress(l.cfg, l.node)
+	l.hashes = NewHash(l.cfg, l.node)
+
 	l.registerHandle()
 	to := time.Duration(5 * time.Second)
 	ctx, cancel := context.WithTimeout(context.TODO(), to)
@@ -280,7 +296,23 @@ func (l *link) syncPin() {
 	}
 }
 
-func New(ctx context.Context, cfg *config.Config, node *core.IpfsNode) Linker {
+func New(repo string, cfg interface{}) (Linker, error) {
+	v, b := cfg.(*config.Config)
+	if !b {
+		return nil, errors.New("could not transfer config")
+	}
+	return &link{
+		repo:        repo,
+		cfg:         v,
+		failedCount: make(map[peer.ID]int64),
+		failedLock:  &sync.RWMutex{},
+		//pinning:     newPinning(node),
+		//addresses:   NewAddress(cfg, node),
+		//hashes:      NewHash(cfg, node),
+	}, nil
+}
+
+func New2(ctx context.Context, cfg *config.Config, node *core.IpfsNode) Linker {
 	return &link{
 		ctx:         ctx,
 		cfg:         cfg,

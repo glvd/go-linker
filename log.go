@@ -1,4 +1,4 @@
-package plugin_bustlinker
+package linker
 
 import (
 	logging "github.com/ipfs/go-log"

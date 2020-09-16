@@ -1,12 +1,14 @@
-package plugin_bustlinker
+package linker
 
 import (
 	"context"
 	"fmt"
-	config "github.com/glvd/plugin-bustlinker/config"
+	"sync"
+
+	config "github.com/glvd/go-bustlinker/config"
+
 	core "github.com/ipfs/go-ipfs/core"
 	"github.com/libp2p/go-libp2p-core/peer"
-	"sync"
 )
 
 const peerName = "address"

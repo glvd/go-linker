@@ -1,16 +1,18 @@
-package plugin_bustlinker
+package linker
 
 import (
 	"encoding/json"
-	"github.com/dgraph-io/badger/v2"
-	"github.com/dgraph-io/badger/v2/options"
-	"github.com/glvd/plugin-bustlinker/config"
 	"os"
 	"path/filepath"
+
+	"github.com/glvd/go-bustlinker/config"
+
+	"github.com/dgraph-io/badger/v2"
+	"github.com/dgraph-io/badger/v2/options"
 )
 
 const (
-	cacheDir = ".cache"
+	cacheName = ".cache"
 )
 
 type baseCache struct {
