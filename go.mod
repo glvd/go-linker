@@ -1,6 +1,6 @@
 module github.com/glvd/go-linker
 
-go 1.15
+go 1.14
 
 require (
 	github.com/davidlazar/go-crypto v0.0.0-20190912175916-7055855a373f // indirect
