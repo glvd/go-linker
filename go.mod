@@ -1,4 +1,4 @@
-module github.com/glvd/go-bustlinker
+module github.com/glvd/go-linker
 
 go 1.15
 

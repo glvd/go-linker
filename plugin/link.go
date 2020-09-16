@@ -6,19 +6,23 @@ import (
 	"github.com/ipfs/go-ipfs/plugin"
 )
 
-type bustlinker struct {
+var Plugins = []plugin.Plugin{
+	&linkerPlugin{},
+}
+
+type linkerPlugin struct {
 	lnk linker.Linker
 }
 
-func (b *bustlinker) Name() string {
+func (b *linkerPlugin) Name() string {
 	return "linker"
 }
 
-func (b *bustlinker) Version() string {
+func (b *linkerPlugin) Version() string {
 	return "0.0.1"
 }
 
-func (b *bustlinker) Init(env *plugin.Environment) error {
+func (b *linkerPlugin) Init(env *plugin.Environment) error {
 	l, err := linker.New(env.Repo, env.Config)
 	if err != nil {
 		return err
@@ -27,6 +31,6 @@ func (b *bustlinker) Init(env *plugin.Environment) error {
 	return nil
 }
 
-func (b *bustlinker) Start(node *core.IpfsNode) error {
+func (b *linkerPlugin) Start(node *core.IpfsNode) error {
 	return b.lnk.SetNode(node).Start()
 }
